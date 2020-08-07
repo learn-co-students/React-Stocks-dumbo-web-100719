@@ -1,31 +1,50 @@
-import React, { Component } from 'react';
-import StockContainer from './StockContainer'
-import PortfolioContainer from './PortfolioContainer'
-import SearchBar from '../components/SearchBar'
+import React, { Component } from "react";
+import StockContainer from "./StockContainer";
+import PortfolioContainer from "./PortfolioContainer";
+import SearchBar from "../components/SearchBar";
 
 class MainContainer extends Component {
+	state = {
+		boughtStocks: []
+	};
+	buyStock = stockObj => {
+		this.setState({
+			boughtStocks: [...this.state.boughtStocks, stockObj]
+		});
+	};
 
-  render() {
-    return (
-      <div>
-        <SearchBar/>
+	sellStock = id => {
+		let newStockArr = this.state.boughtStocks.filter(stock => stock.id !== id);
+		this.setState({
+			boughtStocks: newStockArr
+		});
+	};
 
-          <div className="row">
-            <div className="col-8">
+	render() {
+		return (
+			<div>
+				<SearchBar
+					sortStocks={this.props.sortStocks}
+					filterStocks={this.props.filterStocks}
+				/>
 
-              <StockContainer/>
-
-            </div>
-            <div className="col-4">
-
-              <PortfolioContainer/>
-
-            </div>
-          </div>
-      </div>
-    );
-  }
-
+				<div className="row">
+					<div className="col-8">
+						<StockContainer
+							stocks={this.props.stocks}
+							buyStock={this.buyStock}
+						/>
+					</div>
+					<div className="col-4">
+						<PortfolioContainer
+							boughtStocks={this.state.boughtStocks}
+							sellStock={this.sellStock}
+						/>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default MainContainer;

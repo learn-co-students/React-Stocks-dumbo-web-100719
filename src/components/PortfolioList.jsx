@@ -1,10 +1,13 @@
 import React from "react";
 
-const Stock = props => {
+export const PortfolioList = props => {
 	return (
 		<div>
 			<div className="card">
-				<div className="card-body" onClick={e => props.buyStock(props.stock)}>
+				<div
+					className="card-body"
+					onClick={e => props.sellStock(props.stock.id)}
+				>
 					<h5 className="card-title">{props.stock.name}</h5>
 					<p className="card-text">
 						{props.stock.ticker}: {props.stock.price}
@@ -15,4 +18,4 @@ const Stock = props => {
 	);
 };
 
-export default Stock;
+export default PortfolioList;
